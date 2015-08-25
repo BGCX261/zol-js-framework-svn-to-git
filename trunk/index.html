@@ -1,0 +1,99 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<title>ZOL-JavaScript-Frame</title>
+<style type="text/css">
+    body { padding: 20px 50px 50px; }
+    h2 { margin: 30px 0 10px; font-size: 17px; }
+    .loading { background: #EBF5FA url(assets/loading.gif) no-repeat 50% 50%; }
+
+    p.code-switch { color: #09f; cursor: pointer; margin-top: 10px; }
+    pre.code {
+        color: #444;
+        cursor: auto;
+        border-left: 2px solid #7F96AA;
+        margin-top: 5px;
+        padding: 0 10px 20px 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+<script src="lib/yui2/yui-base/yui-base-min.js"></script>
+<script src="zol.js"></script>
+<script src="zol-log.js"></script>
+<script src="widget.js"></script>
+<script src="tabs.js"></script>
+<script src="switchable.js"></script>
+
+
+<style type="text/css">
+    #demo1 { position: relative; width: 750px; padding-top: 29px; }
+    #demo1 .ks-switchable-nav { position: absolute; left: 20px; margin-top: -29px; z-index: 99; }
+    #demo1 .ks-switchable-nav li {
+        float: left;
+        width: 130px;
+        height: 27px;
+        line-height: 21px;
+        text-align: center;
+        background: url(assets/tabs-sprite.gif) no-repeat 0 6px;
+        margin-right: 3px;
+        padding-top: 8px;
+        cursor: pointer;
+    }
+    #demo1 .ks-switchable-nav li.active { background-position: 0 -40px; cursor: default; }
+    #demo1 .ks-switchable-content {
+        position: relative;
+        height: 120px;
+        padding: 20px;
+        border: 1px solid #AEC7E5;
+    }
+</style>
+
+<div id="demo1" class="section">
+    <ul class="ks-switchable-nav">
+        <li class="active">标题 A</li>
+        <li>标题 B</li>
+        <li>标题 C</li>
+        <li>标题 D</li>
+        <li>标题 E</li>
+    </ul>
+    <div class="ks-switchable-content">
+        <div>
+<pre>
+  - 在当前 trigger 中 mouseover/mouseout, click, focus, 不触发
+  - 鼠标快速滑过非当前 trigger, 不触发
+  - mouseover 到非当前 trigger, 停留时间到达延迟时，触发
+  - click 或 Tab 切换到 trigger, 立即触发
+  - beforeSwitch/onSwitch 事件的触发
+  - 延迟的内容能正确加载
+</pre>
+        </div>
+        <div style="display: none">内容 B</div>
+        <div style="display: none">内容 C</div>
+        <div style="display: none">内容 D</div>
+        <div style="display: none"><textarea class="ks-datalazyload-custom">我是延迟内容</textarea></div>
+    </div>
+</div>
+<script>
+    ZOL().use("*", function(Z) {
+        var tabs = new Z.Tabs("demo1", {
+            //lazyDataType: "textarea-data"
+        });
+        tabs.subscribe("beforeSwitch", function(index) {
+            if (index !== 0 && index !== 4) { // 不改变第 1 个和第 5 个 Panel 的内容
+                this.panels[index].innerHTML = "index = " + index;
+            }
+        });
+    });
+</script>
+
+<script type="text/javascript">
+(function(){
+	ZOL().use("*", function(Z) {
+		Z.log(typeof NaN);
+	});
+})();
+</script>
+</body>
+</html>
